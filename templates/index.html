@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>King of the Hill</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif|Inconsolata" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+{% block body %}
+<div id="name-item-container">
+    <ul id="name-items-list">
+        <li class="user-item">
+            <i class="fa fa-list-ol" aria-hidden="true"></i> <span><strong>Scoreboard</strong></span>
+        </li>
+        {% for item in users %}
+        <li class="user-item">
+            <span class="user-item-name">{{ item.name }}</span>
+            <span class="user-item-time">{{ item.seconds }}</span>
+        </li>
+        {% endfor %}
+    </ul>
+    <span id="name-item-container-footer">
+        <span>Made with <i class="fa fa-heart" aria-hidden="true"></i> in Sweden</span>
+    </span>
+</div>
+
+<div id="main-content-container">
+    <div id="king-person-container">
+        {% if user %}
+        <h1 id="king-name">{{ user.name }}</h1>
+        <h2 id="king-time">0 seconds</h2> <!-- Placeholder value -->
+        {% else %}
+        <h3 id="king-missing">Looks like the hill is clear,<br/> enter your name to capture it!</h3>
+        {% endif %}
+    </div>
+    <form method="POST" id="name-input">
+        <input name="name" value="{{ request.form.name }}" placeholder="Your name" required autofocus>
+        <button type="submit"><i class="fa fa-bolt" aria-hidden="true"></i> <span>Submit</span></button>
+    </form>
+</div>
+
+{% if user %}
+<script type="text/javascript" src="{{ url_for('static', filename='timerFunctions.js') }}" ></script>
+<script>
+    initInterval("king-time", "{{ user.seconds }}", 1000);
+    convertItems(".user-item-time");
+
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-58469115-6', 'auto');
+    ga('send', 'pageview');
+</script>
+{% endif %}
+{% endblock %}
+
+</body>
+</html>
