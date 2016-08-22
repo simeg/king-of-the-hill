@@ -41,8 +41,8 @@ body {
 
     width: 25%;
     height: 100vh;
-    background-size: cover;
     background: #512e92 url(https://cdn01.gitter.im/_s/1f043e7/images/home/banner.jpg) no-repeat center center;
+    background-size: cover;
 }
 
 /* Menu items */
